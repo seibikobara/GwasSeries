@@ -43,7 +43,7 @@ gwas_grange <- function(csvFilePath, gap){
 chrom_state_grange = function(csvFilePath,chr){
     path = file.path(csvFilePath)
     temp = readr::read_csv(path)
-    states = GenomicRanges::GRanges(seqnames = GenomicRanges::Rle(chr, nrow(temp)),
+    states = GenomicRanges::GRanges(seqnames = IRanges::Rle(chr, nrow(temp)),
                 range = IRanges::IRanges(start = temp$start, end = temp$end) 
      )
     # add meta (states)
