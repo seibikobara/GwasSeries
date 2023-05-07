@@ -18,8 +18,9 @@ gwas_grange <- function(csvFilePath, gap){
     names(temp1) = c("chr","pos") 
     # rmeove na
     temp1 = temp1[complete.cases(temp1),]
-
-    gr = GenomicRanges::GRanges(seqnames = temp1$chr,
+    # add chr to chr numeric
+    temp1 = temp1 |> dplyr::rowwise() |> dplyr::mutate(newchr = paste0("chr",chr))
+    gr = GenomicRanges::GRanges(seqnames = temp1$newchr,
             range = IRanges::IRanges(start = temp1$pos-gap, end = temp1$pos+gap) 
      )
      return(gr)
