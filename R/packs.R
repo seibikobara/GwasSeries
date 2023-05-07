@@ -47,9 +47,27 @@ chrom_state_grange = function(csvFilePath){
                 range = IRanges::IRanges(start = temp$start, end = temp$end) 
      )
     # add meta (states)
-    values(states) = data.frame(states = temp$state)
+    ## convert state to interpretable state name
+    temp = temp |> dplyr::mutate(new_state=
+                    ifelse(state == 1, "1: Active TSS",
+                    ifelse(state == 2, "2: Flanking Active TSS",
+                    ifelse(state == 3, "3: Transcr.at gene 5' and 3'",
+                    ifelse(state == 4, "4: Strong transcription",
+                    ifelse(state == 5, "5: Weak transcription",
+                    ifelse(state == 6, "6: Genic enhancers",
+                    ifelse(state == 7, "7: Enhancers",
+                    ifelse(state == 8, "8: ZNF genes & repeats",
+                    ifelse(state == 9, "9: Heterochromatin",
+                    ifelse(state == 10, "Bivalent/Poised TSS",
+                    ifelse(state == 11, "11: Flanking Bivalent TSS/Enh",
+                    ifelse(state == 12, "12: Bivalent Enhancer",
+                    ifelse(state == 13, "13: Repressed PolyComb",
+                    ifelse(state == 14, "14: Weak Repressed PolyComb",
+                    ifelse(state == 15, "15: Quiescent/Low", NA))))))))))))))))
+    values(states) = data.frame(states = temp$new_state)
     return(states)
 }
+
 
 
 
