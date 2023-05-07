@@ -2,7 +2,6 @@
 
 export(chrom_state_grange)
 export(gwas_grange)
-import(GenomicFeature)
 import(GenomicRanges)
 import(janitor)
 import(magrittr)
