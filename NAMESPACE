@@ -3,6 +3,4 @@
 export(chrom_state_grange)
 export(gwas_grange)
 import(GenomicRanges)
-import(janitor)
-import(magrittr)
 import(tidyverse)

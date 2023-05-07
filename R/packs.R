@@ -6,7 +6,7 @@
 #' @param csvFilepath path of csv file
 #' @param gap the gap bps across the position of SNP
 #' @export
-#' @import tidyverse magrittr GenomicRanges janitor
+#' @import tidyverse GenomicRanges
 
 
 gwas_grange <- function(csvFilePath, gap){
@@ -35,7 +35,7 @@ gwas_grange <- function(csvFilePath, gap){
 #' @param csvFilepath path of csv file
 #' @param chr chrmosome (string) ex, chr1, chr2...
 #' @export
-#' @import tidyverse magrittr GenomicRanges janitor
+#' @import tidyverse GenomicRanges
 
 
 
@@ -43,7 +43,7 @@ gwas_grange <- function(csvFilePath, gap){
 chrom_state_grange = function(csvFilePath,chr){
     path = file.path(csvFilePath)
     temp = readr::read_csv(path)
-    states = GenomicRanges::GRanges(seqnames = Rle(chr, nrow(temp)),
+    states = GenomicRanges::GRanges(seqnames = GenomicRanges::Rle(chr, nrow(temp)),
                 range = IRanges::IRanges(start = temp$start, end = temp$end) 
      )
     # add meta (states)
