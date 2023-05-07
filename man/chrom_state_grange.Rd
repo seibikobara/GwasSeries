@@ -5,9 +5,11 @@
 \alias{chrome_state_grange}
 \title{Chromatin states manipulation}
 \usage{
-chrom_state_grange(csvFilePath)
+chrom_state_grange(csvFilePath, ...)
 }
 \arguments{
+\item{...}{description, c(full, abbr, none)}
+
 \item{csvFilepath}{path of csv file}
 }
 \description{

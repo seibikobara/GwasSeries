@@ -34,13 +34,14 @@ gwas_grange <- function(csvFilePath, gap){
 #' return grange
 #' @aliases chrome_state_grange
 #' @param csvFilepath path of csv file
+#' @param ... description, c(full, abbr, none)
 #' @export
 #' @import tidyverse GenomicRanges
 
 
 
 # chromatin state to grange
-chrom_state_grange = function(csvFilePath){
+chrom_state_grange = function(csvFilePath, ...){
     path = file.path(csvFilePath)
     temp = readr::read_csv(path)
     states = GenomicRanges::GRanges(seqnames = temp$chrom,
@@ -48,7 +49,8 @@ chrom_state_grange = function(csvFilePath){
      )
     # add meta (states)
     ## convert state to interpretable state name
-    temp = temp |> dplyr::mutate(new_state=
+    if(... %in% c("full")){
+        temp = temp |> dplyr::mutate(new_state=
                     ifelse(state == 1, "1: Active TSS",
                     ifelse(state == 2, "2: Flanking Active TSS",
                     ifelse(state == 3, "3: Transcr.at gene 5' and 3'",
@@ -64,6 +66,26 @@ chrom_state_grange = function(csvFilePath){
                     ifelse(state == 13, "13: Repressed PolyComb",
                     ifelse(state == 14, "14: Weak Repressed PolyComb",
                     ifelse(state == 15, "15: Quiescent/Low", NA))))))))))))))))
+    }else if(... %in% c("abbr")){
+        temp = temp |> dplyr::mutate(new_state=
+                    ifelse(state == 1, "1: TssA",
+                    ifelse(state == 2, "2: TssAFlnk",
+                    ifelse(state == 3, "3: TxFlnk",
+                    ifelse(state == 4, "4: Tx",
+                    ifelse(state == 5, "5: TxWk",
+                    ifelse(state == 6, "6: EnhG",
+                    ifelse(state == 7, "7: Enh",
+                    ifelse(state == 8, "8: ZNF",
+                    ifelse(state == 9, "9: Het",
+                    ifelse(state == 10, "10: TssBiv",
+                    ifelse(state == 11, "11: BivFlnk",
+                    ifelse(state == 12, "12: EnhBiv",
+                    ifelse(state == 13, "13: ReprPC",
+                    ifelse(state == 14, "14: ReproPCWk",
+                    ifelse(state == 15, "15: Quies", NA))))))))))))))))
+    }else{
+        temp = temp |> dplyr::mutate(new_state= state)
+    }
     values(states) = data.frame(states = temp$new_state)
     return(states)
 }
