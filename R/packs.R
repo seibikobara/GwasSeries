@@ -33,17 +33,16 @@ gwas_grange <- function(csvFilePath, gap){
 #' return grange
 #' @aliases chrome_state_grange
 #' @param csvFilepath path of csv file
-#' @param chr chrmosome (string) ex, chr1, chr2...
 #' @export
 #' @import tidyverse GenomicRanges
 
 
 
 # chromatin state to grange
-chrom_state_grange = function(csvFilePath,chr){
+chrom_state_grange = function(csvFilePath){
     path = file.path(csvFilePath)
     temp = readr::read_csv(path)
-    states = GenomicRanges::GRanges(seqnames = rep(chr, nrow(temp)),
+    states = GenomicRanges::GRanges(seqnames = temp$chrom,
                 range = IRanges::IRanges(start = temp$start, end = temp$end) 
      )
     # add meta (states)

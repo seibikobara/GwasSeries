@@ -5,11 +5,9 @@
 \alias{chrome_state_grange}
 \title{Chromatin states manipulation}
 \usage{
-chrom_state_grange(csvFilePath, chr)
+chrom_state_grange(csvFilePath)
 }
 \arguments{
-\item{chr}{chrmosome (string) ex, chr1, chr2...}
-
 \item{csvFilepath}{path of csv file}
 }
 \description{
