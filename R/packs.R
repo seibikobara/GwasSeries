@@ -11,7 +11,7 @@
 
 gwas_grange <- function(csvFilePath, gap){
     path = file.path(csvFilePath)
-    gwas = readr::read_csv(path)
+    gwas = readr::read_csv(path, col_types = cols(Location=col_character()))
     chr_loc = stringr::str_split(gwas$Location, pattern = stringr::regex(":"))
     temp = lapply(chr_loc, as.numeric)
     temp1 = as.data.frame(do.call(rbind, temp))
