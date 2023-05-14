@@ -2,7 +2,7 @@
 #' Gwas catalog manipulation
 #' @description 
 #' return grange
-#' @aliases gwas_grange
+#' @aliases gwas_grange_from_path
 #' @param csvFilepath path of csv file
 #' @param gap the gap bps across the position of SNP
 #' @export
@@ -32,7 +32,7 @@ gwas_grange_from_path <- function(csvFilePath, gap){
 #' Gwas catalog manipulation
 #' @description 
 #' return grange
-#' @aliases gwas_grange
+#' @aliases gwas_grange_from_file
 #' @param file csv file
 #' @param gap the gap bps across the position of SNP
 #' @export

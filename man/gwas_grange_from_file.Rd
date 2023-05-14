@@ -2,7 +2,6 @@
 % Please edit documentation in R/packs.R
 \name{gwas_grange_from_file}
 \alias{gwas_grange_from_file}
-\alias{gwas_grange}
 \title{Gwas catalog manipulation}
 \usage{
 gwas_grange_from_file(file, gap)
