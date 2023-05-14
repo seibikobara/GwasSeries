@@ -9,7 +9,7 @@
 #' @import tidyverse GenomicRanges
 
 
-gwas_grange <- function(csvFilePath, gap){
+gwas_grange_from_path <- function(csvFilePath, gap){
     path = file.path(csvFilePath)
     gwas = readr::read_csv(path, col_types = cols(Location=col_character()))
     chr_loc = stringr::str_split(gwas$Location, pattern = stringr::regex(":"))
@@ -25,6 +25,46 @@ gwas_grange <- function(csvFilePath, gap){
      )
      return(gr)
 }
+
+
+
+#' @title 
+#' Gwas catalog manipulation
+#' @description 
+#' return grange
+#' @aliases gwas_grange
+#' @param file csv file
+#' @param gap the gap bps across the position of SNP
+#' @export
+#' @import tidyverse GenomicRanges
+
+
+gwas_grange_from_file <- function(file, gap){
+    gwas = file
+    chr_loc = stringr::str_split(gwas$Location, pattern = stringr::regex(":"))
+    temp = lapply(chr_loc, as.numeric)
+    temp1 = as.data.frame(do.call(rbind, temp))
+    names(temp1) = c("chr","pos") 
+    # rmeove na
+    temp1 = temp1[complete.cases(temp1),]
+    # add chr to chr numeric
+    temp1 = temp1 |> dplyr::rowwise() |> dplyr::mutate(newchr = paste0("chr",chr))
+    gr = GenomicRanges::GRanges(seqnames = temp1$newchr,
+            range = IRanges::IRanges(start = temp1$pos-gap, end = temp1$pos+gap) 
+     )
+     return(gr)
+}
+
+
+
+
+
+
+
+
+
+
+
 
 
 
